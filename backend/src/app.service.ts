@@ -1,8 +1,18 @@
 import { Injectable } from '@nestjs/common';
 
+export interface HealthResponse {
+  status: 'ok';
+  timezone: string;
+  timestamp: string;
+}
+
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getHealth(): HealthResponse {
+    return {
+      status: 'ok',
+      timezone: process.env.TIMEZONE ?? 'America/Sao_Paulo',
+      timestamp: new Date().toISOString(),
+    };
   }
 }
