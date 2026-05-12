@@ -1,6 +1,5 @@
 export const MARKET_DATA_PROVIDER = Symbol('MARKET_DATA_PROVIDER');
 
-
 export type MarketTicker = string;
 
 export interface QuoteSnapshot {

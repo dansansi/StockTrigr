@@ -6,7 +6,11 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), ScheduleModule.forRoot(), PrismaModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
+    PrismaModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
