@@ -1,4 +1,4 @@
-export const MARKET_DATA_PROVIDER = Symbol('MARKET_DATA_PROVIDER');
+export const marketDataProvider = Symbol('Market_Data_Provider');
 
 export type StockName = string;
 
