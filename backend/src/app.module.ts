@@ -4,12 +4,14 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
+import { DailyPriceModule } from './daily-price/daily-price.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
     PrismaModule,
+    DailyPriceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
