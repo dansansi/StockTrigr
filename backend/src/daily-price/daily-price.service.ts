@@ -52,7 +52,7 @@ export class DailyPriceService implements OnModuleInit {
           })),
         });
 
-        this.logger.log(`${count} candles de ${ticker} inseridos.`);
+        this.logger.log(`Candles de ${ticker} inseridos.`);
       } catch (error) {
         this.logger.error(`Erro no ${ticker} => ${error}`);
       }
