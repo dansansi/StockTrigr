@@ -19,6 +19,15 @@ export class DailyPriceService implements OnModuleInit {
     await this.seedHistoricalPrices();
   }
 
+  async getLastN(ticker: string, n: number) {
+    return this.prisma.dailyPrice.findMany({
+      where: { ticker },
+      orderBy: { date: 'desc' },
+      take: n,
+      select: { close: true },
+    });
+  }
+
   async seedHistoricalPrices() {
     const tickers = await this.watchlist.getActiveTickers();
 
