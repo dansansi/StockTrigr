@@ -5,6 +5,7 @@ export type StockName = string;
 export interface QuoteSnapshot {
   symbol: string;
   regularMarketPrice: number | null;
+  regularMarketDayLow: number | null;
   currency: string | null;
   shortName: string | null;
 }
@@ -23,7 +24,12 @@ export interface MarketDataProvider {
   getQuote(tickers: StockName[]): Promise<QuoteSnapshot[]>;
   getHistory(ticker: StockName, candles: number): Promise<DailyCandle[]>;
 }
-export function marketDataProvider(marketDataProvider: any): (target: typeof import("../daily-price/daily-price.service").DailyPriceService, propertyKey: undefined, parameterIndex: 1) => void {
+export function marketDataProvider(
+  marketDataProvider: any,
+): (
+  target: typeof import('../daily-price/daily-price.service').DailyPriceService,
+  propertyKey: undefined,
+  parameterIndex: 1,
+) => void {
   throw new Error('Function not implemented.');
 }
-

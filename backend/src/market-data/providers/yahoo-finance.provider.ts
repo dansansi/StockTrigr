@@ -18,6 +18,7 @@ export class YahooFinanceProvider implements MarketDataProvider {
       return results.map((result) => ({
         symbol: result.symbol,
         regularMarketPrice: result.regularMarketPrice ?? null,
+        regularMarketDayLow: result.regularMarketDayLow ?? null,
         currency: result.currency ?? null,
         shortName: result.shortName ?? null,
       }));

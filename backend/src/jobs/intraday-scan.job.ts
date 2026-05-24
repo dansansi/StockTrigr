@@ -34,8 +34,12 @@ export class IntradayScanJob {
         );
         continue;
       }
+      if (!regularMarketPrice) {
+        this.logger.warn(`${symbol}: sem preço atual!`);
+        continue;
+      }
 
-      const closes = [history.map((c) => c.close), regularMarketPrice];
+      const closes = [...history.map((c) => c.close), regularMarketPrice];
 
       const bb20 = this.indicator.calculateBB(closes, 2.0);
       const bbFibo = this.indicator.calculateBB(closes, 4.8);
@@ -73,6 +77,7 @@ export class IntradayScanJob {
         if (check.value <= check.lower) {
           const msg = `${symbol} - Gatilho: ${check.triggerType}\nValor: ${check.value?.toFixed(2)} -- Banda inferior: ${check.lower.toFixed(2)}`;
           await this.alert.sendAlert(symbol, check.triggerType, msg);
+          break;
         }
       }
     }
