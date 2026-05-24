@@ -9,7 +9,7 @@ export class DailyPriceService implements OnModuleInit {
 
   constructor(
     private readonly prisma: PrismaService,
-    @Inject(marketDataProviderTypes.marketDataProvider)
+    @Inject(marketDataProviderTypes.Symbol_marketDataProvider)
     private readonly marketData: marketDataProviderTypes.MarketDataProvider,
     private readonly watchlist: WatchlistService,
   ) {}
