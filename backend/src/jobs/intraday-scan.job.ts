@@ -75,7 +75,7 @@ export class IntradayScanJob {
         if (check.value == null) continue;
 
         if (check.value <= check.lower) {
-          const msg = `${symbol} - Gatilho: ${check.triggerType}\nValor: ${check.value?.toFixed(2)} -- Banda inferior: ${check.lower.toFixed(2)}`;
+          const msg = `${symbol} - Gatilho: ${check.triggerType} em ${check.value?.toFixed(2)} -- Banda inferior: ${check.lower.toFixed(2)}`;
           await this.alert.sendAlert(symbol, check.triggerType, msg);
           break;
         }
