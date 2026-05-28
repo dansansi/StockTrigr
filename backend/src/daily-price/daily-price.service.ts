@@ -65,7 +65,7 @@ export class DailyPriceService implements OnModuleInit {
       } catch (error) {
         this.logger.error(`Erro no ${ticker} => ${error}`);
       }
-      this.logger.log('Historico concluído.');
     }
+    this.logger.log('Historico concluído.');
   }
 }

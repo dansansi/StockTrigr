@@ -39,11 +39,11 @@ export class YahooFinanceProvider implements MarketDataProvider {
       return result.quotes.map((q) => ({
         symbol: ticker,
         date: q.date,
-        open: parseFloat(q.open!.toFixed(2)) ?? null,
-        high: parseFloat(q.high!.toFixed(2)) ?? null,
-        low: parseFloat(q.low!.toFixed(2)) ?? null,
-        close: parseFloat(q.close!.toFixed(2)) ?? null,
-        volume: q.volume ?? null,
+        open: q.open!,
+        high: q.high!,
+        low: q.low!,
+        close: q.close!,
+        volume: q.volume!,
       }));
     } catch (error) {
       throw new Error(
