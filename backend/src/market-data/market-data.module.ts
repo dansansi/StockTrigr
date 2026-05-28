@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { YahooFinanceProvider } from './providers/yahoo-finance.provider';
-import { marketDataProvider } from './market-data-provider.types';
+import { Symbol_marketDataProvider } from './market-data-provider.types';
 
 @Module({
   providers: [
     {
-      provide: marketDataProvider,
+      provide: Symbol_marketDataProvider,
       useClass: YahooFinanceProvider,
     },
   ],
-  exports: [marketDataProvider],
+  exports: [Symbol_marketDataProvider],
 })
 export class MarketDataModule {}

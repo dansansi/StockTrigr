@@ -9,7 +9,7 @@ export class DailyPriceService implements OnModuleInit {
 
   constructor(
     private readonly prisma: PrismaService,
-    @Inject(marketDataProviderTypes.marketDataProvider)
+    @Inject(marketDataProviderTypes.Symbol_marketDataProvider)
     private readonly marketData: marketDataProviderTypes.MarketDataProvider,
     private readonly watchlist: WatchlistService,
   ) {}
@@ -17,6 +17,15 @@ export class DailyPriceService implements OnModuleInit {
   async onModuleInit() {
     this.logger.log('Verificando histórico dos preços.');
     await this.seedHistoricalPrices();
+  }
+
+  async getLastN(ticker: string, n: number) {
+    return this.prisma.dailyPrice.findMany({
+      where: { ticker },
+      orderBy: { date: 'desc' },
+      take: n,
+      select: { close: true },
+    });
   }
 
   async seedHistoricalPrices() {
@@ -56,7 +65,7 @@ export class DailyPriceService implements OnModuleInit {
       } catch (error) {
         this.logger.error(`Erro no ${ticker} => ${error}`);
       }
-      this.logger.log('Historico concluído.');
     }
+    this.logger.log('Historico concluído.');
   }
 }
