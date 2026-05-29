@@ -1,0 +1,13 @@
+services:
+  stocktrigr:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env
+    volumes:
+      - sqlite-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  sqlite-data:

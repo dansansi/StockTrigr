@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { DailyPriceModule } from './daily-price/daily-price.module';
+import { JobsModule } from './jobs/jobs.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { DailyPriceModule } from './daily-price/daily-price.module';
     ScheduleModule.forRoot(),
     PrismaModule,
     DailyPriceModule,
+    JobsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
