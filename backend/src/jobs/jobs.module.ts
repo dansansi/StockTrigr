@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ScheduleModule } from '@nestjs/schedule';
 import { IntradayScanJob } from './intraday-scan.job';
 import { DailyCloseJob } from './daily-close.job';
 import { MarketDataModule } from 'src/market-data/market-data.module';
@@ -11,7 +10,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
   imports: [
-    ScheduleModule.forRoot(),
     MarketDataModule,
     WatchlistModule,
     DailyPriceModule,

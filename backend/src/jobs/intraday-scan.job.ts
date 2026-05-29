@@ -21,6 +21,7 @@ export class IntradayScanJob {
 
   @Cron('*/15 10-18 * * 1-5', { timeZone: 'America/Sao_Paulo' })
   async run() {
+    this.logger.log('Fetch de 15 min rodando');
     const tickers = await this.watchlist.getActiveTickers();
     const quotes = await this.marketData.getQuote(tickers);
 
