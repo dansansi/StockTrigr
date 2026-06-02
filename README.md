@@ -9,11 +9,11 @@ NestJS · TypeScript · Prisma · SQLite · Discord Webhook API
 ## Funcionalidades
 
 Watchlist configurável de ativos da B3
- Cálculo de Bollinger Bands (desvios 2.0 e 4.8) e RSI
- Job intraday a cada 15 minutos em horário de mercado
- Job diário para persistência do candle de fechamento
- Deduplicação de alertas por ativo/dia
- Alertas enviados via Discord Webhook
+ Cálculo de Bollinger Bands (desvios 2.0 e 4.8) e RSI.
+ Job intraday a cada 15 minutos em horário de mercado.
+ Job diário para persistência do candle de fechamento.
+ Supressão de alertas por ativo/dia.
+ Alertas enviados via Discord Webhook.
 
 ## Deploy
 
