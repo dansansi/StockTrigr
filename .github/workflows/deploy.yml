@@ -12,37 +12,67 @@ permissions:
     packages: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Login no ghcr.io
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Login no ghcr.io
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build e Push da imagem
+      - name: Login to Ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          region: sa-east-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Build e Push pra GHCR + ECR
         uses: docker/build-push-action@v5
         with:
           context: ./backend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/stocktrigr:latest
+          tags: |
+            483772923157.dkr.ecr.sa-east-1.amazonaws.com/stocktrigr:latest
+#            ghcr.io/${{ github.repository_owner }}/stocktrigr:latest
+            
 
-      - name: Login na Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#  deploy-azure:
+#    runs-on: ubuntu-latest
+#    needs: build
+#    steps:
+#      - name: Login na Azure
+#        uses: azure/login@v1
+#        with:
+#          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy no Container App
+ #     - name: Deploy no Container App
+ #       run: |
+ #         az containerapp update \
+ #           --name stocktrigr-container \
+ #           --resource-group stocktrigr-rg \
+ #           --image ghcr.io/${{ github.repository_owner }}/stocktrigr:latest
+
+  deploy_aws:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy no ECS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: sa-east-1
         run: |
-          az containerapp update \
-            --name stocktrigr-container \
-            --resource-group stocktrigr-rg \
-            --image ghcr.io/${{ github.repository_owner }}/stocktrigr:latest
+          aws ecs update-service \
+            --cluster stocktrigr-cluster \
+            --service stocktrigr-service \
+            --force-new-deployment
