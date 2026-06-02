@@ -1,23 +1,23 @@
-name: Deploy StockTrigr
+#name: Deploy StockTrigr
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+#on:
+#  push:
+#    branches:
+#      - main
+#  workflow_dispatch:
 
-permissions:
-    contents: read
-    id-token: write
-    packages: write
+#permissions:
+#    contents: read
+#    id-token: write
+#    packages: write
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
 
 #      - name: Login no ghcr.io
 #        uses: docker/login-action@v3
@@ -26,20 +26,20 @@ jobs:
 #          username: ${{ github.actor }}
 #          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Login to Ecr
-        uses: aws-actions/amazon-ecr-login@v2
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: sa-east-1
+#      - name: Login to Ecr
+#        uses: aws-actions/amazon-ecr-login@v2
+#        env:
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          AWS_REGION: sa-east-1
 
-      - name: Build e Push pra GHCR + ECR
-        uses: docker/build-push-action@v5
-        with:
-          context: ./backend
-          push: true
-          tags: |
-            483772923157.dkr.ecr.sa-east-1.amazonaws.com/stocktrigr:latest
+#      - name: Build e Push pra GHCR + ECR
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: ./backend
+#          push: true
+#          tags: |
+#            483772923157.dkr.ecr.sa-east-1.amazonaws.com/stocktrigr:latest
 #            ghcr.io/${{ github.repository_owner }}/stocktrigr:latest
             
 
@@ -61,17 +61,17 @@ jobs:
  #           --resource-group stocktrigr-rg \
  #           --image ghcr.io/${{ github.repository_owner }}/stocktrigr:latest
 
-  deploy_aws:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy no ECS
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: sa-east-1
-        run: |
-          aws ecs update-service \
-            --cluster stocktrigr-cluster \
-            --service stocktrigr-service \
-            --force-new-deployment
+#  deploy_aws:
+#    runs-on: ubuntu-latest
+#    needs: build
+#    steps:
+#      - name: Deploy no ECS
+#        env:
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          AWS_DEFAULT_REGION: sa-east-1
+#        run: |
+#          aws ecs update-service \
+#            --cluster stocktrigr-cluster \
+#            --service stocktrigr-service \
+#            --force-new-deployment
